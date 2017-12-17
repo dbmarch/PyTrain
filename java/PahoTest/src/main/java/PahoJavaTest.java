@@ -9,7 +9,7 @@
         public static void main(String[] args) {
 
             String topic        = "engine/power/control";
-            String content      = "50";
+            String content      = "90";
             int qos             = 2;
             String broker       = "tcp://192.168.1.79:1883";
             String clientId     = "Browser";
