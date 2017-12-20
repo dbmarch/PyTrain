@@ -205,8 +205,6 @@ client.on_log = on_log
 
 client.loop_start()    #start the loop
 
-oled.clearDisplay()
-
 client.subscribe(enginePowerControl)
 client.subscribe(shutdownControl)
 client.subscribe(lifeCycleFeedback)
@@ -218,6 +216,8 @@ client.subscribe(actuatorPowerInternal)
 client.subscribe(lightsCalibrationControl)
 client.subscribe(lightsOverrideControl)
 client.subscribe(lightsAmbientFeedback)
+
+oled.putString("Train Ready")
 
 while 1:
     

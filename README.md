@@ -20,9 +20,11 @@ sudo reboot
 
 ## 2) Install MQTT Client Python libraries:
 
+---
 git clone https://github.com/eclipse/paho.mqtt.python
 cd paho.mqtt.python
 sudo python setup.py install
+---
 
 Useful links:
 a) https://pypi.python.org/pypi/paho-mqtt
