@@ -1,22 +1,27 @@
 # Setting up the PI:
 
+Instructions to setup the PI to run the MQTT client in python talking to the Mosquitto broker.
+You can control the train by publishing MQTT commands.  
+
 Load Raspian
     sudo apt-get update
     sudo apt-get upgrade
     sudo apt-get install build-essential 
 
-configure raspi-config to enable the I2C, camera, ssh, etc
+Configure raspi-config to enable the I2C, camera, ssh, etc
     sudo raspi-config
 
 ## 1) Install Dexter Libraries:
 
 
 Install Grove PI Libraries from Dexter: (PYTHON)
+
 Setting up the PI:
 
-sudo curl -kL dexterindustries.com/update_grovepi | bash
+    sudo curl -kL dexterindustries.com/update_grovepi | bash
 
-sudo reboot
+    sudo reboot
+
 
 ## 2) Install MQTT Client Python libraries:
 
@@ -27,6 +32,7 @@ sudo python setup.py install
 ---
 
 Useful links:
+
 a) https://pypi.python.org/pypi/paho-mqtt
 
 b) https://www.eclipse.org/paho/downloads.php
@@ -34,11 +40,11 @@ b) https://www.eclipse.org/paho/downloads.php
 
 ## 3) Install MQTT Broker and Mosquitto:
 
-sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
+    sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
 
 ## 4) Some useful Python Libaries:
 
-sudo pip install netifaces
+    sudo pip install netifaces
 
 
 ## 5) Misc Info on Open Edge
@@ -65,7 +71,7 @@ ssh -l pi 192.168.1.79
 
 ## 7) Install Mosquitto Broker
 
-[Useful Links:](https://learn.adafruit.com/diy-esp8266-home-security-with-lua-and-mqtt/configuring-mqtt-on-the-raspberry-pi)
+[Setting up MQTT on PI](https://learn.adafruit.com/diy-esp8266-home-security-with-lua-and-mqtt/configuring-mqtt-on-the-raspberry-pi)
 
 ----
 >// Install MQTT Mosquitto
@@ -77,20 +83,21 @@ ssh -l pi 192.168.1.79
 
 To startup the mosquitto server:
 
-(in foreground in separate window
+In foreground in separate window:
+
     sudo mosquitto -v -c /etc/mosquitto/mosquitto.conf
 
-as daemon
+As daemon:
 
     sudo mosquitto -v -d -c /etc/mosquitto/mosquitto.conf
 
-to restart:
+to kill background mosquitto :
 
 
-sudo kill $(ps aux |awk '/mosquitto/ {print $2}')
+    sudo kill $(ps aux |awk '/mosquitto/ {print $2}')
 
 
-## 8) When all else fails , build the mosquitto broker
+## 8) If you can't install successfully, , build and install the mosquitto broker
 
 See [Building MQTT Broker](http://goochgooch.co.uk/2014/08/01/building-mosquitto-1-4/)
 
@@ -102,24 +109,24 @@ Option 1: build instructions for an newer version…
     sudo apt-get install cmake libssl-dev
     cd <SRC>   # i.e. your source code home
 
-wget http://git.warmcat.com/cgi-bin/cgit/libwebsockets/snapshot/libwebsockets-1.3-chrome37-firefox30.tar.gz
+    wget http://git.warmcat.com/cgi-bin/cgit/libwebsockets/snapshot/libwebsockets-1.3-chrome37-firefox30.tar.gz
 
-tar -xzvf libwebsockets-1.3-chrome37-firefox30.tar.gz
-cd libwebsockets-1.3-chrome37-firefox30/
-mkdir build
-cd build
-cmake .. -DOPENSSL_ROOT_DIR=/usr/bin/openssl
-make
-sudo make install
+    tar -xzvf libwebsockets-1.3-chrome37-firefox30.tar.gz
+    cd libwebsockets-1.3-chrome37-firefox30/
+    mkdir build
+    cd build
+    cmake .. -DOPENSSL_ROOT_DIR=/usr/bin/openssl
+    make
+    sudo make install
 ----
 
 ## Install git tools
 
-sudo apt-get install git    
+    sudo apt-get install git    
 
 Clone the Mosquitto repo and switch to the 1.4 branch
 
-cd <SRC>   # i.e. your source code home
+    cd <SRC>   # i.e. your source code home
 
 ----
     cd mosquitto/
@@ -134,22 +141,22 @@ WITH_WEBSOCKETS:=yes
 
 Then install pre-reqs:-
 
-sudo apt-get install uuid-dev xsltproc docbook-xsl
+    sudo apt-get install uuid-dev xsltproc docbook-xsl
 
 And then…
 
-make
-make test
-sudo make install
+    make
+    make test
+    sudo make install
 
 If need be, edit or create your config file and create the service user ID.
 
-sudo vi /etc/mosquitto/mosquitto.conf
-sudo useradd -r -m -d /var/lib/mosquitto -s /usr/sbin/nologin -g nogroup mosquitto
+    sudo vi /etc/mosquitto/mosquitto.conf
+    sudo useradd -r -m -d /var/lib/mosquitto -s /usr/sbin/nologin -g nogroup mosquitto
 
 Then start it up…
 
-sudo /usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+    sudo /usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
 
 And you’re done.
 
